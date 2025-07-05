@@ -3,7 +3,11 @@ class CreateActiveOperatorOperations < ActiveRecord::Migration[<%= ActiveRecord:
     create_table :active_operator_operations do |t|
       t.string :type, null: false
       t.references :record, polymorphic: true, null: false, index: true
+      <% if ActiveRecord::Base.connection.adapter_name.downcase == 'postgresql' %>
+      t.jsonb :response, null: false, default: "{}"
+      <% else %>
       t.json :response, null: false, default: "{}"
+      <% end %>
       t.datetime :received_at
       t.datetime :processed_at
       t.datetime :errored_at
