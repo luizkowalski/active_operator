@@ -21,10 +21,10 @@ module ActiveOperator
       test "should generate operation file with simple name" do
         run_generator ["user"]
 
-        assert_file "app/operations/user_operation.rb"
+        assert_file "app/operations/user.rb"
 
-        operation_contents = File.read(File.join(destination_root, "app/operations/user_operation.rb"))
-        assert_match "class UserOperation < ApplicationOperator", operation_contents
+        operation_contents = File.read(File.join(destination_root, "app/operations/user.rb"))
+        assert_match "class User < ApplicationOperation", operation_contents
         assert_match "def request", operation_contents
         assert_match "def process", operation_contents
       end
@@ -32,19 +32,19 @@ module ActiveOperator
       test "should generate operation file with nested directories" do
         run_generator ["geocode/v1/pull"]
 
-        assert_file "app/operations/geocode/v1/pull_operation.rb"
+        assert_file "app/operations/geocode/v1/pull.rb"
 
-        operation_contents = File.read(File.join(destination_root, "app/operations/geocode/v1/pull_operation.rb"))
-        assert_match "class Geocode::V1::PullOperation < ApplicationOperator", operation_contents
+        operation_contents = File.read(File.join(destination_root, "app/operations/geocode/v1/pull.rb"))
+        assert_match "class Geocode::V1::Pull < ApplicationOperation", operation_contents
       end
 
       test "should generate operation file with deeply nested directories" do
         run_generator ["api/v2/users/profile/update"]
 
-        assert_file "app/operations/api/v2/users/profile/update_operation.rb"
+        assert_file "app/operations/api/v2/users/profile/update.rb"
 
-        operation_contents = File.read(File.join(destination_root, "app/operations/api/v2/users/profile/update_operation.rb"))
-        assert_match "class Api::V2::Users::Profile::UpdateOperation < ApplicationOperator", operation_contents
+        operation_contents = File.read(File.join(destination_root, "app/operations/api/v2/users/profile/update.rb"))
+        assert_match "class Api::V2::Users::Profile::Update < ApplicationOperation", operation_contents
       end
 
       test "should handle operation suffix correctly" do
@@ -53,7 +53,7 @@ module ActiveOperator
         assert_file "app/operations/user_operation.rb"
 
         operation_contents = File.read(File.join(destination_root, "app/operations/user_operation.rb"))
-        assert_match "class UserOperation < ApplicationOperator", operation_contents
+        assert_match "class UserOperation < ApplicationOperation", operation_contents
       end
 
       test "should handle nested operation with operation suffix" do
@@ -62,7 +62,7 @@ module ActiveOperator
         assert_file "app/operations/geocode/v1/pull_operation.rb"
 
         operation_contents = File.read(File.join(destination_root, "app/operations/geocode/v1/pull_operation.rb"))
-        assert_match "class Geocode::V1::PullOperation < ApplicationOperator", operation_contents
+        assert_match "class Geocode::V1::PullOperation < ApplicationOperation", operation_contents
       end
     end
   end
